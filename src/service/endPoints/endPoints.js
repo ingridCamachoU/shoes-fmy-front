@@ -13,11 +13,17 @@ export const endPoints = {
         updateCategories: (id) => `${URL}${VERSION}/categories/${id}/`,
         deleteCategories: (id) => `${URL}${VERSION}/categories/${id}/`,
     },
+    sizes: {
+        getSize: `${URL}${VERSION}/sizes/`,
+        deleteSizes: (id) => `${URL}${VERSION}/sizes/${id}/`,
+    },
     products: {
         getProducts: `${URL}${VERSION}/products/`,
         getSearchProducts: (product) =>
             `${URL}${VERSION}/products/?search=${product}`,
-        getFilterProducts: `${URL}${VERSION}/products/?exclude=true`,
+        getFilterProducts: (item, valor) =>
+            `${URL}${VERSION}/products/?${item}=${valor}`,
+
         updateProduct: (id) => `${URL}${VERSION}/products/${id}/`,
         deleteProduct: (id) => `${URL}${VERSION}/products/${id}/`,
     },

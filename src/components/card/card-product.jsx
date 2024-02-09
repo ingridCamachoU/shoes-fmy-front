@@ -1,14 +1,24 @@
-import shoes from '../../assets/shoes.png';
+import { HeartIcon } from '@heroicons/react/24/outline';
+import { converterPrice } from '../../utils/converter';
 
-const Card = () => {
+const Card = ({ images, name, price }) => {
     return (
-        <div className="w-70 py-4 px-2 gap-4 flex flex-col shadow-sm hover:shadow-md border border-gray-100 bg-white items-center">
-            <picture className="w-full flex items-center justify-center">
-                <img src={shoes} alt="product" className="h-32 w-40" />
+        <div className="w-70 py-2 px-2 flex flex-col hover:shadow-md bg-white ">
+            <picture className="w-full flex items-center justify-center relative">
+                <img
+                    src={images}
+                    alt="product"
+                    className="shadow-md shadow-gray-200"
+                />
+                <span className="absolute top-5 right-5">
+                    <HeartIcon className="h-5 w-5 text-orange-300" />
+                </span>
             </picture>
-            <h3 className="font-bold">Tenis AdiFOM SST Bota</h3>
+            <h3 className="text-lg pt-2"> {name}</h3>
             <p className="flex justify-between">
-                <span className="text-lg">$ 90.000</span>
+                <span className="text-lg font-bold">
+                    $ {converterPrice(price)}
+                </span>
             </p>
         </div>
     );

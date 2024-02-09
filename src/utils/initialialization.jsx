@@ -1,26 +1,20 @@
-
-export const initialFormProduct ={
-    "code": "",
-    "name": "",
-    "description": "",
-    "price": "",
-    "stock": "",
-    "profit": "30",
-    "category": "",
-    "transmission": "",
-    "mark_model":"",
-    "images": [],
+export const initialFormProduct = {
+    code: '',
+    name: '',
+    description: '',
+    price: '',
+    stock: '',
+    color: '',
+    images: [],
+    gender: '',
+    category: '',
+    sizes: [],
 };
 
-export const initialFormProv = {    
-    "nit": "",
-    "name": "",
-    "contact": "",
-    "email": ""
+export const initialFormCategorie = {
+    name: '',
 };
 
-export const initialFormQuotation = {
-    "product": "",
-    "provider":"",
-    "price": "" 
-}
+export const initialFormSize = {
+    number: '',
+};

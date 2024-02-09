@@ -1,6 +1,10 @@
-import LayoutBase from '../../layout/layout-base';
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import Card from '../../components/card/card-product';
 import CardStore from '../../components/card/card-store';
+import Loading from '../../components/Loading';
+import Poster from '../../components/poster/poster';
 import StoreInformation from '../../components/store-inf/store-information';
 
 import poster from '../../assets/home/poster-home.svg';
@@ -10,9 +14,23 @@ import cali from '../../assets/home/store-cali.svg';
 import medellin from '../../assets/home/store-medellin.svg';
 import bogota from '../../assets/home/store-bogota.svg';
 import outletHome from '../../assets/home/outlet-home.svg';
-import Poster from '../../components/poster/poster';
+
+import { useFetch } from '../../hooks/useFetch';
+import LayoutBase from '../../layout/layout-base';
+import { endPoints } from '../../service/endPoints/endPoints';
 
 const Home = () => {
+    const urlProduct = endPoints.products.getProducts;
+    const {
+        data: dataProducts,
+        loading,
+        error,
+        loadingData: loadDataProducts,
+    } = useFetch(urlProduct);
+
+    useEffect(() => {
+        loadDataProducts();
+    }, [urlProduct]);
     return (
         <LayoutBase>
             <div>
@@ -20,17 +38,32 @@ const Home = () => {
             </div>
             <h1 className="text-2xl	font-bold mt-4">NUEVA COLECCIÓN</h1>
             <div className="w-full max-w-screen-xl">
-                <section className="grid md:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-3 grid-cols-2">
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                </section>
+                {loading ? (
+                    <Loading />
+                ) : (
+                    <div className="w-full max-w-screen-xl">
+                        {dataProducts.data?.length > 0 ? (
+                            <section className="grid md:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-3 grid-cols-2">
+                                {dataProducts.data?.map((product) => (
+                                    <Link
+                                        key={product.id}
+                                        to={product.name}
+                                        state={product}
+                                    >
+                                        <Card {...product} />
+                                    </Link>
+                                ))}
+                            </section>
+                        ) : (
+                            <div className="w-full flex justify-center items-center mt-10">
+                                No hay coincidencias
+                            </div>
+                        )}
+                    </div>
+                )}
+                {error !== null
+                    ? console.log('Error de conexión', 'error')
+                    : null}
             </div>
 
             <Poster

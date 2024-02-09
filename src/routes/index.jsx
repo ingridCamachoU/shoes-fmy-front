@@ -6,6 +6,7 @@ import ManIndex from '../pages/man/man-index';
 import BlogIndex from '../pages/blog/blog-index';
 import AccesoriesIndex from '../pages/accessories/accesories-index';
 import Login from '../pages/login/login';
+import IndexAdministrator from '../pages/administrator/index-administrator';
 
 export const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
             {
                 path: 'login',
                 element: <Login />,
+            },
+            {
+                path: 'administrator',
+                element: <IndexAdministrator />,
             },
         ],
     },
