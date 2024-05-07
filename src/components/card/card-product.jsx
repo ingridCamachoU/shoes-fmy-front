@@ -1,23 +1,58 @@
-import { HeartIcon } from '@heroicons/react/24/outline';
+import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import { converterPrice } from '../../utils/converter';
+import { useState } from 'react';
+import { useUserContext } from '../../context/user-contex';
 
-const Card = ({ images, name, price }) => {
+const Card = (product) => {
+    const [icons, setIcons] = useState(false);
+    const { onAddProduct, cart, deleteProduct } = useUserContext();
+
+    const changeIcon = () => {
+        !icons ? setIcons(true) : setIcons(false);
+    };
+
+    const addShopping = (e, product) => {
+        e.preventDefault();
+        changeIcon();
+        onAddProduct(product);
+    };
+
+    const deleteShopping = (e) => {
+        e.preventDefault();
+        changeIcon();
+        cart.some((item) => {
+            if (item.id === product?.id) {
+                deleteProduct(item);
+            }
+        });
+    };
+
     return (
-        <div className="w-70 py-2 px-2 flex flex-col hover:shadow-md bg-white ">
-            <picture className="w-full flex items-center justify-center relative">
+        <div className="w-70 py-2 px-2 flex flex-col  bg-white ">
+            <picture className="w-full flex items-center justify-center cursor-pointer">
                 <img
-                    src={images}
+                    src={product?.images}
                     alt="product"
-                    className="shadow-md shadow-gray-200"
+                    className="shadow-md shadow-gray-200 hover:scale-110 duration-500"
                 />
-                <span className="absolute top-5 right-5">
-                    <HeartIcon className="h-5 w-5 text-orange-300" />
-                </span>
             </picture>
-            <h3 className="text-lg pt-2"> {name}</h3>
-            <p className="flex justify-between">
+            <h3 className="text-lg pt-4"> {product?.name}</h3>
+            <p className="flex justify-between pr-2">
                 <span className="text-lg font-bold">
-                    $ {converterPrice(price)}
+                    $ {converterPrice(product?.price)}
+                </span>
+                <span>
+                    {cart.some((item) => item.id === product?.id) ? (
+                        <ShoppingBagIcon
+                            className="h-5 w-5 text-text-yellow rounded hover:scale-110 duration-500 active:scale-95 cursor-pointer"
+                            onClick={(e) => deleteShopping(e)}
+                        />
+                    ) : (
+                        <ShoppingBagIcon
+                            onClick={(e) => addShopping(e, product)}
+                            className="h-5 w-5 hover:scale-110 duration-500  active:scale-95 cursor-pointer"
+                        />
+                    )}
                 </span>
             </p>
         </div>

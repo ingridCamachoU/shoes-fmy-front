@@ -19,6 +19,7 @@ export const endPoints = {
     },
     products: {
         getProducts: `${URL}${VERSION}/products/`,
+        getDetailProducts: (product) => `${URL}${VERSION}/products/${product}`,
         getSearchProducts: (product) =>
             `${URL}${VERSION}/products/?search=${product}`,
         getFilterProducts: (item, valor) =>

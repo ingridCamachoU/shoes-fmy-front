@@ -7,6 +7,8 @@ import BlogIndex from '../pages/blog/blog-index';
 import AccesoriesIndex from '../pages/accessories/accesories-index';
 import Login from '../pages/login/login';
 import IndexAdministrator from '../pages/administrator/index-administrator';
+import DetailProduct from '../pages/detail-product/detail-product';
+import ShoppingCart from '../pages/shopping-cart/shopping-cart';
 
 export const router = createBrowserRouter([
     {
@@ -14,16 +16,28 @@ export const router = createBrowserRouter([
         element: <PrivateLayout />,
         children: [
             {
-                index: true,
+                index: '/',
                 element: <Home />,
+            },
+            {
+                path: ':productId',
+                element: <DetailProduct />,
             },
             {
                 path: 'mujer',
                 element: <WomanIndex />,
             },
             {
+                path: 'mujer/:productId',
+                element: <DetailProduct />,
+            },
+            {
                 path: 'hombre',
                 element: <ManIndex />,
+            },
+            {
+                path: 'hombre/:productId',
+                element: <DetailProduct />,
             },
             {
                 path: 'blog',
@@ -34,9 +48,18 @@ export const router = createBrowserRouter([
                 element: <AccesoriesIndex />,
             },
             {
+                path: 'complementos/:productId',
+                element: <DetailProduct />,
+            },
+            {
+                path: 'shopping',
+                element: <ShoppingCart />,
+            },
+            {
                 path: 'login',
                 element: <Login />,
             },
+
             {
                 path: 'administrator',
                 element: <IndexAdministrator />,

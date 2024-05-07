@@ -3,7 +3,7 @@ import { useFetch } from '../../hooks/useFetch';
 import LayoutBase from '../../layout/layout-base';
 import { endPoints } from '../../service/endPoints/endPoints';
 import Card from '../../components/card/card-product';
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom';
 import Loading from '../../components/Loading';
 
 const AccesoriesIndex = () => {
@@ -30,7 +30,7 @@ const AccesoriesIndex = () => {
                             {dataProducts.data?.map((product) => (
                                 <Link
                                     key={product.id}
-                                    to={product.name}
+                                    to={product.id}
                                     state={product}
                                 >
                                     <Card {...product} />

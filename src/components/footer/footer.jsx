@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import logoFooter from '../../assets/logo-footer.svg';
 import { animateScroll as scroll } from 'react-scroll';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     const toggleHome = () => {
@@ -31,16 +32,19 @@ const Footer = () => {
             </div>
             <div className="flex bg-background-black text-text-white md:flex-row flex-col py-10 w-full gap-4 items-center mt-auto">
                 <div className="flex flex-col items-center gap-4 w-full">
-                    <picture
-                        className="flex justify-center items-center cursor-pointer"
-                        onClick={toggleHome}
-                    >
-                        <img
-                            className="w-40 h-12"
-                            src={logoFooter}
-                            alt="logo Footer"
-                        />
-                    </picture>
+                    <Link to={'/'}>
+                        <picture
+                            className="flex justify-center items-center cursor-pointer"
+                            onClick={toggleHome}
+                        >
+                            <img
+                                className="w-40 h-12"
+                                src={logoFooter}
+                                alt="logo Footer"
+                            />
+                        </picture>
+                    </Link>
+
                     <div className="flex flex-col items-center gap-2">
                         <p>Síguenos en:</p>
                         <p className="gap-4 flex items-center">

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import Card from '../../components/card/card-product';
 import CardStore from '../../components/card/card-store';
@@ -15,22 +14,11 @@ import medellin from '../../assets/home/store-medellin.svg';
 import bogota from '../../assets/home/store-bogota.svg';
 import outletHome from '../../assets/home/outlet-home.svg';
 
-import { useFetch } from '../../hooks/useFetch';
 import LayoutBase from '../../layout/layout-base';
-import { endPoints } from '../../service/endPoints/endPoints';
+import { useUserContext } from '../../context/user-contex';
 
 const Home = () => {
-    const urlProduct = endPoints.products.getProducts;
-    const {
-        data: dataProducts,
-        loading,
-        error,
-        loadingData: loadDataProducts,
-    } = useFetch(urlProduct);
-
-    useEffect(() => {
-        loadDataProducts();
-    }, [urlProduct]);
+    const { loading, dataProduct, error } = useUserContext();
     return (
         <LayoutBase>
             <div>
@@ -42,12 +30,12 @@ const Home = () => {
                     <Loading />
                 ) : (
                     <div className="w-full max-w-screen-xl">
-                        {dataProducts.data?.length > 0 ? (
+                        {dataProduct?.data?.length > 0 ? (
                             <section className="grid md:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-3 grid-cols-2">
-                                {dataProducts.data?.map((product) => (
+                                {dataProduct.data?.map((product) => (
                                     <Link
                                         key={product.id}
-                                        to={product.name}
+                                        to={product.id}
                                         state={product}
                                     >
                                         <Card {...product} />

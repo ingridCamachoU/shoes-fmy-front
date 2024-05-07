@@ -66,13 +66,13 @@ const ManIndex = () => {
                                                 id="size-option-1"
                                                 type="radio"
                                                 name="size"
-                                                value={size.id}
+                                                value={size?.id}
                                                 className="h-4 w-4 border-gray-300 "
                                                 aria-labelledby="size-option-1"
                                                 aria-describedby="size-option-1"
                                             />
                                             <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                                {size.number}
+                                                {size?.number}
                                             </label>
                                         </div>
                                     ))}
@@ -92,20 +92,20 @@ const ManIndex = () => {
                                 <div>
                                     {dataCategorie.data?.map((categorie) => (
                                         <div
-                                            key={categorie.id}
+                                            key={categorie?.id}
                                             className="flex items-center mb-4"
                                         >
                                             <input
                                                 id="categorie-option-1"
                                                 type="radio"
                                                 name="categorie"
-                                                value={categorie.id}
+                                                value={categorie?.id}
                                                 className="h-4 w-4 border-gray-300 "
                                                 aria-labelledby="categorie-option-1"
                                                 aria-describedby="categorie-option-1"
                                             />
                                             <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                                {categorie.name}
+                                                {categorie?.name}
                                             </label>
                                         </div>
                                     ))}
@@ -260,7 +260,7 @@ const ManIndex = () => {
                                     {dataProducts.data?.map((product) => (
                                         <Link
                                             key={product.id}
-                                            to={product.name}
+                                            to={product.id}
                                             state={product}
                                         >
                                             <Card {...product} />

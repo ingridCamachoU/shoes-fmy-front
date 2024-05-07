@@ -24,19 +24,10 @@ const WomanIndex = () => {
         loadingData: loadDataProducts,
     } = useFetch(urlProduct);
 
-    const {
-        data: dataCategorie,
-        loadingCategorie,
-        errorCateogrie,
-        loadingData: loadDataCategorie,
-    } = useFetch(urlCategorie);
+    const { data: dataCategorie, loadingData: loadDataCategorie } =
+        useFetch(urlCategorie);
 
-    const {
-        data: dataSize,
-        loadingSize,
-        errorSize,
-        loadingData: loadDataSize,
-    } = useFetch(urlSize);
+    const { data: dataSize, loadingData: loadDataSize } = useFetch(urlSize);
 
     useEffect(() => {
         loadDataProducts();
@@ -59,20 +50,20 @@ const WomanIndex = () => {
                                 <div className="grid grid-cols-3">
                                     {dataSize.data?.map((size) => (
                                         <div
-                                            key={size.id}
+                                            key={size?.id}
                                             className="flex items-center mb-4"
                                         >
                                             <input
                                                 id="size-option-1"
                                                 type="radio"
                                                 name="size"
-                                                value={size.id}
+                                                value={size?.id}
                                                 className="h-4 w-4 border-gray-300 "
                                                 aria-labelledby="size-option-1"
                                                 aria-describedby="size-option-1"
                                             />
                                             <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                                {size.number}
+                                                {size?.number}
                                             </label>
                                         </div>
                                     ))}
@@ -99,7 +90,7 @@ const WomanIndex = () => {
                                                 id="categorie-option-1"
                                                 type="radio"
                                                 name="categorie"
-                                                value={categorie.id}
+                                                value={categorie?.id}
                                                 className="h-4 w-4 border-gray-300 "
                                                 aria-labelledby="categorie-option-1"
                                                 aria-describedby="categorie-option-1"
@@ -255,12 +246,12 @@ const WomanIndex = () => {
                         <Loading />
                     ) : (
                         <div className="w-full max-w-screen-xl">
-                            {dataProducts.data?.length > 0 ? (
+                            {dataProducts?.data?.length > 0 ? (
                                 <section className="grid md:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-3 grid-cols-2">
                                     {dataProducts.data?.map((product) => (
                                         <Link
                                             key={product.id}
-                                            to={product.name}
+                                            to={product.id}
                                             state={product}
                                         >
                                             <Card {...product} />
