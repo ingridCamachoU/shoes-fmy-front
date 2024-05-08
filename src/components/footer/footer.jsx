@@ -49,7 +49,7 @@ const Footer = () => {
                         <p>Síguenos en:</p>
                         <p className="gap-4 flex items-center">
                             <a
-                                href="https://www.facebook.com/profile.php?id=100063876372180"
+                                href="https://www.youtube.com/watch?v=R6MNlWagZhk"
                                 target="_blank"
                             >
                                 <FontAwesomeIcon
@@ -58,7 +58,7 @@ const Footer = () => {
                                 />
                             </a>
                             <a
-                                href="https://www.instagram.com/radcarscucuta/"
+                                href="https://www.youtube.com/watch?v=R6MNlWagZhk"
                                 target="_blank"
                             >
                                 <FontAwesomeIcon
@@ -73,17 +73,39 @@ const Footer = () => {
                 <div className="flex flex-col gap-2 w-full items-center pr-8 md:pr-0">
                     <div>
                         <h5 className="font-bold pb-4 cursor-pointer">AYUDA</h5>
+
                         <h5 className="font-light cursor-pointer hover:text-text-yellow">
-                            Preguntas Frecuentes
+                            <a
+                                href="https://www.youtube.com/watch?v=R6MNlWagZhk"
+                                target="_blank"
+                            >
+                                Preguntas Frecuentes
+                            </a>
                         </h5>
                         <h5 className="font-light cursor-pointer hover:text-text-yellow">
-                            Información de Envios
+                            <a
+                                href="https://www.youtube.com/watch?v=R6MNlWagZhk"
+                                target="_blank"
+                            >
+                                Información de Envios
+                            </a>
                         </h5>
                         <h5 className="font-light cursor-pointer hover:text-text-yellow">
-                            Términos y condiciones
+                            <a
+                                href="https://www.youtube.com/watch?v=R6MNlWagZhk"
+                                target="_blank"
+                            >
+                                Términos y condiciones
+                            </a>
                         </h5>
+
                         <h5 className="font-light cursor-pointer hover:text-text-yellow">
-                            Cambios y Garantias
+                            <a
+                                href="https://www.youtube.com/watch?v=R6MNlWagZhk"
+                                target="_blank"
+                            >
+                                Cambios y Garantias
+                            </a>
                         </h5>
                     </div>
                 </div>
@@ -92,10 +114,21 @@ const Footer = () => {
                     <div>
                         <p className="font-bold pb-4">CONTÁCTANOS</p>
                         <h5 className="font-light cursor-pointer hover:text-text-yellow">
-                            Whatsapp: (+57) 304-234 982
+                            <a
+                                href="https://www.youtube.com/watch?v=R6MNlWagZhk"
+                                target="_blank"
+                            >
+                                Whatsapp: (+57) 304-234 982
+                            </a>
                         </h5>
+
                         <h5 className="font-light cursor-pointer hover:text-text-yellow">
-                            Email: contacto@fmy.com.co
+                            <a
+                                href="https://www.youtube.com/watch?v=R6MNlWagZhk"
+                                target="_blank"
+                            >
+                                Email: contacto@fmy.com.co
+                            </a>
                         </h5>
                     </div>
                 </div>

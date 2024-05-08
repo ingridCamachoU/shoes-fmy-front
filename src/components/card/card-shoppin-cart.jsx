@@ -13,10 +13,10 @@ const CardShoppinCart = ({
     const priceN = parseInt(price * quantity);
 
     return (
-        <div className="items-center flex justify-between mt-8 bg-white p-2 flex-wrap sm:flex-row flex-col w-full sm:gap-0 gap-4">
+        <div className="items-center flex justify-between mt-4 ml-2 bg-white p-2 flex-wrap sm:flex-row flex-col w-full sm:gap-0 gap-4">
             <div className="flex sm:w-8/12 w-full items-center">
                 <picture className="sm:w-1/5 w-1/3">
-                    <img className="w-16 h-16" src={images} alt="sin imagen" />
+                    <img className="w-20 h-20" src={images} alt="sin imagen" />
                 </picture>
 
                 <p className="font-light sm:w-3/4 w-11/12">{name}</p>
@@ -43,7 +43,7 @@ const CardShoppinCart = ({
                 <div className="flex w-4/6 justify-between px-4">
                     <p>$ {converterPrice(priceN)}</p>
                     <button onClick={deleteProduct}>
-                        <TrashIcon className="h-6 w-6 hover:text-text-blue" />
+                        <TrashIcon className="h-6 w-6 hover:text-yellow-600" />
                     </button>
                 </div>
             </div>

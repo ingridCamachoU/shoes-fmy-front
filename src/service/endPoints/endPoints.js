@@ -22,8 +22,15 @@ export const endPoints = {
         getDetailProducts: (product) => `${URL}${VERSION}/products/${product}`,
         getSearchProducts: (product) =>
             `${URL}${VERSION}/products/?search=${product}`,
-        getFilterProducts: (item, valor) =>
-            `${URL}${VERSION}/products/?${item}=${valor}`,
+        getFilterProducts: (filtros) => {
+            const parametros = new URLSearchParams();
+
+            for (const filtro in filtros) {
+                parametros.append(filtro, filtros[filtro]);
+            }
+
+            return `${URL}${VERSION}/products/?${parametros.toString()}`;
+        },
 
         updateProduct: (id) => `${URL}${VERSION}/products/${id}/`,
         deleteProduct: (id) => `${URL}${VERSION}/products/${id}/`,

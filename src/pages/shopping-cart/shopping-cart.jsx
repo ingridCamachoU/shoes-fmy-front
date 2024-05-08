@@ -33,10 +33,10 @@ const ShoppingCart = () => {
     return (
         <LayoutBase>
             <div className="w-full max-w-screen-xl">
-                <div className="flex w-full my-12 flex-wrap lg:flex-row flex-col justify-center items-center bg-slate-50 p-4">
+                <div className="flex w-full my-12 flex-wrap lg:flex-row flex-col justify-center  bg-slate-50 p-4">
                     <div className="lg:w-8/12 w-11/12 m-1">
                         {cart.length === 0 ? (
-                            <div className="bg-white text-text-gray p-1     items-center flex flex-col gap-2">
+                            <div className="bg-white text-text-gray p-1 items-center flex flex-col gap-2 mt-2">
                                 <img
                                     src={shoppin}
                                     alt="shopping"
@@ -91,10 +91,12 @@ const ShoppingCart = () => {
                                     </span>
                                 </p>
                                 <button className="bg-background-yellow text-text-ligth items-center flex justify-center gap-2 rounded-lg w-50 mt-4 hover:bg-yellow-600 px-1 font-semibold">
-                                    Continuar compra
-                                    <span>
-                                        <WhaspBtn />
-                                    </span>
+                                    <a
+                                        href="https://www.youtube.com/watch?v=R6MNlWagZhk"
+                                        target="_blank"
+                                    >
+                                        Continuar compra
+                                    </a>
                                 </button>
                             </div>
                         )}

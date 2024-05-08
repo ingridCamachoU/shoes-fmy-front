@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { StopIcon } from '@heroicons/react/24/solid';
 import { useFetch } from '../../hooks/useFetch';
 import LayoutBase from '../../layout/layout-base';
 import { endPoints } from '../../service/endPoints/endPoints';
@@ -10,11 +9,28 @@ import StoreInformation from '../../components/store-inf/store-information';
 import posterFashionMan from '../../assets/home/poster-fashion-man.svg';
 
 const ManIndex = () => {
-    //--- Load Data Product---//
-    const urlProduct = endPoints.products.getFilterProducts(
-        'gender',
-        'Masculino'
-    );
+    const [filtros, setFiltros] = useState({
+        color: '',
+        category: '',
+        gender: 'Masculino',
+        size: '',
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFiltros({ ...filtros, [name]: value });
+    };
+
+    const handleResetFilters = () => {
+        setFiltros({
+            color: '',
+            category: '',
+            gender: 'femenino',
+            size: '',
+        });
+    };
+
+    const urlProduct = endPoints.products.getFilterProducts(filtros);
     const urlCategorie = endPoints.categories.getCategories;
     const urlSize = endPoints.sizes.getSize;
     const {
@@ -24,25 +40,27 @@ const ManIndex = () => {
         loadingData: loadDataProducts,
     } = useFetch(urlProduct);
 
-    const {
-        data: dataCategorie,
-        loadingCategorie,
-        errorCateogrie,
-        loadingData: loadDataCategorie,
-    } = useFetch(urlCategorie);
+    const { data: dataCategorie, loadingData: loadDataCategorie } =
+        useFetch(urlCategorie);
 
-    const {
-        data: dataSize,
-        loadingSize,
-        errorSize,
-        loadingData: loadDataSize,
-    } = useFetch(urlSize);
+    const { data: dataSize, loadingData: loadDataSize } = useFetch(urlSize);
+
+    const colorOptions = [
+        { value: 'blanco', label: 'Blanco', backgroundColor: 'white' },
+        { value: 'negro', label: 'Negro', backgroundColor: 'black' },
+        { value: 'beige', label: 'Beige', backgroundColor: 'beige' },
+        { value: 'rojo', label: 'Rojo', backgroundColor: 'red' },
+        { value: 'azul', label: 'Azul', backgroundColor: 'blue' },
+        { value: 'verde', label: 'Verde', backgroundColor: 'green' },
+        { value: 'camel', label: 'Camel', backgroundColor: 'tan' },
+    ];
 
     useEffect(() => {
         loadDataProducts();
         loadDataCategorie();
         loadDataSize();
     }, [urlProduct, urlCategorie, urlSize]);
+
     return (
         <LayoutBase>
             <div>
@@ -50,7 +68,13 @@ const ManIndex = () => {
             </div>
             <div className="w-full max-w-screen-xl flex my-4">
                 <div className="w-1/5">
-                    <form>
+                    <form className="ml-4">
+                        <button
+                            onClick={handleResetFilters}
+                            className="flex justify-center items-center font-bold p-2 rounded bg-yellow-50 border-2 mb-4"
+                        >
+                            Limpiar filtros
+                        </button>
                         <fieldset className="mb-2">
                             <legend className="sr-only">Talla</legend>
                             <h2 className="my-2 font-bold">Talla</h2>
@@ -59,17 +83,21 @@ const ManIndex = () => {
                                 <div className="grid grid-cols-3">
                                     {dataSize.data?.map((size) => (
                                         <div
-                                            key={size.id}
+                                            key={size?.id}
                                             className="flex items-center mb-4"
                                         >
                                             <input
-                                                id="size-option-1"
+                                                id={`size-option-${size?.id}`}
                                                 type="radio"
                                                 name="size"
                                                 value={size?.id}
-                                                className="h-4 w-4 border-gray-300 "
-                                                aria-labelledby="size-option-1"
-                                                aria-describedby="size-option-1"
+                                                checked={
+                                                    filtros.size === size?.id
+                                                }
+                                                onChange={handleInputChange}
+                                                className="h-4 w-4 border-gray-300 cursor-pointer"
+                                                aria-labelledby={`size-option-${size?.id}`}
+                                                aria-describedby={`size-option-${size?.id}`}
                                             />
                                             <label className="text-sm font-medium text-gray-900 ml-2 block">
                                                 {size?.number}
@@ -92,20 +120,25 @@ const ManIndex = () => {
                                 <div>
                                     {dataCategorie.data?.map((categorie) => (
                                         <div
-                                            key={categorie?.id}
+                                            key={categorie.id}
                                             className="flex items-center mb-4"
                                         >
                                             <input
-                                                id="categorie-option-1"
+                                                id={`category-option-${categorie.id}`}
                                                 type="radio"
-                                                name="categorie"
+                                                name="category"
                                                 value={categorie?.id}
-                                                className="h-4 w-4 border-gray-300 "
-                                                aria-labelledby="categorie-option-1"
-                                                aria-describedby="categorie-option-1"
+                                                checked={
+                                                    filtros.category ===
+                                                    categorie?.id
+                                                }
+                                                onChange={handleInputChange}
+                                                className="h-4 w-4 border-gray-300 cursor-pointer"
+                                                aria-labelledby={`category-option-${categorie?.id}`}
+                                                aria-describedby={`category-option-${categorie?.id}`}
                                             />
                                             <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                                {categorie?.name}
+                                                {categorie.name}
                                             </label>
                                         </div>
                                     ))}
@@ -119,144 +152,58 @@ const ManIndex = () => {
 
                         <fieldset className="mb-2">
                             <legend className="sr-only">Color</legend>
-
                             <h2 className="my-2 font-bold">Color</h2>
 
-                            <div className="flex items-center mb-4">
-                                <input
-                                    id="colors-option-1"
-                                    type="radio"
-                                    name="colors"
-                                    value="blanco"
-                                    className="h-4 w-4 border-gray-300 "
-                                    aria-labelledby="colors-option-1"
-                                    aria-describedby="colors-option-1"
-                                />
-                                <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                    <span className="flex gap-1">
-                                        <StopIcon className="h-4 w-4 text-white border border-black rounded-sm" />
-                                        Blanco
-                                    </span>
-                                </label>
-                            </div>
-
-                            <div className="flex items-center mb-4">
-                                <input
-                                    id="colors-option-2"
-                                    type="radio"
-                                    name="colors"
-                                    value="negro"
-                                    className="h-4 w-4 border-gray-300"
-                                    aria-labelledby="colors-option-2"
-                                    aria-describedby="colors-option-2"
-                                />
-                                <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                    <span className="flex gap-1">
-                                        <StopIcon className="h-4 w-4 text-black border border-black rounded-sm" />
-                                        Negro
-                                    </span>
-                                </label>
-                            </div>
-
-                            <div className="flex items-center mb-4">
-                                <input
-                                    id="colors-option-3"
-                                    type="radio"
-                                    name="colors"
-                                    value="beige"
-                                    className="h-4 w-4 border-gray-300"
-                                    aria-labelledby="colors-option-3"
-                                    aria-describedby="colors-option-3"
-                                />
-                                <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                    <span className="flex gap-1">
-                                        <StopIcon className="h-4 w-4 text-orange-100 border border-black rounded-sm" />
-                                        Beige
-                                    </span>
-                                </label>
-                            </div>
-
-                            <div className="flex items-center mb-4">
-                                <input
-                                    id="colors-option-4"
-                                    type="radio"
-                                    name="colors"
-                                    value="rojo"
-                                    className="h-4 w-4 border-gray-300"
-                                    aria-labelledby="colors-option-4"
-                                    aria-describedby="colors-option-4"
-                                />
-                                <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                    <span className="flex gap-1">
-                                        <StopIcon className="h-4 w-4 text-red-700 border border-black rounded-sm" />
-                                        rojo
-                                    </span>
-                                </label>
-                            </div>
-
-                            <div className="flex items-center mb-4">
-                                <input
-                                    id="colors-option-5"
-                                    type="radio"
-                                    name="colors"
-                                    value="azul"
-                                    className="h-4 w-4 border-gray-300"
-                                    aria-labelledby="colors-option-5"
-                                    aria-describedby="colors-option-5"
-                                />
-                                <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                    <span className="flex gap-1">
-                                        <StopIcon className="h-4 w-4 text-blue-500 border border-black rounded-sm" />
-                                        Azul
-                                    </span>
-                                </label>
-                            </div>
-
-                            <div className="flex items-center mb-4">
-                                <input
-                                    id="colors-option-6"
-                                    type="radio"
-                                    name="colors"
-                                    value="verde"
-                                    className="h-4 w-4 border-gray-300"
-                                    aria-labelledby="colors-option-6"
-                                    aria-describedby="colors-option-6"
-                                />
-                                <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                    <span className="flex gap-1">
-                                        <StopIcon className="h-4 w-4 text-green-600 border border-black rounded-sm" />
-                                        Verde
-                                    </span>
-                                </label>
-                            </div>
-
-                            <div className="flex items-center mb-4">
-                                <input
-                                    id="colors-option-7"
-                                    type="radio"
-                                    name="colors"
-                                    value="camel"
-                                    className="h-4 w-4 border-gray-300"
-                                    aria-labelledby="colors-option-7"
-                                    aria-describedby="colors-option-7"
-                                />
-                                <label className="text-sm font-medium text-gray-900 ml-2 block">
-                                    <span className="flex gap-1">
-                                        <StopIcon className="h-4 w-4 text-red-300 border border-black rounded-sm" />
-                                        Camel
-                                    </span>
-                                </label>
-                            </div>
+                            {colorOptions.map((colorOption, index) => (
+                                <div
+                                    className="flex items-center mb-4"
+                                    key={index}
+                                >
+                                    <input
+                                        id={`color-option-${index + 1}`}
+                                        type="radio"
+                                        name="color"
+                                        value={colorOption.value}
+                                        checked={
+                                            filtros.color === colorOption.value
+                                        }
+                                        onChange={handleInputChange}
+                                        className="h-4 w-4 border-gray-300 cursor-pointer"
+                                        aria-labelledby={`color-option-${
+                                            index + 1
+                                        }`}
+                                        aria-describedby={`color-option-${
+                                            index + 1
+                                        }`}
+                                    />
+                                    <label
+                                        htmlFor={`color-option-${index + 1}`}
+                                        className="text-sm font-medium text-gray-900 ml-2 block cursor-pointer"
+                                    >
+                                        <span className="flex gap-1">
+                                            <span
+                                                className="inline-block w-4 h-4 rounded-full border border-gray-400"
+                                                style={{
+                                                    backgroundColor:
+                                                        colorOption.backgroundColor,
+                                                }}
+                                            ></span>
+                                            {colorOption.label}
+                                        </span>
+                                    </label>
+                                </div>
+                            ))}
                         </fieldset>
                     </form>
                 </div>
+
                 <div className="w-4/5">
                     {loading ? (
                         <Loading />
                     ) : (
                         <div className="w-full max-w-screen-xl">
-                            {dataProducts.data?.length > 0 ? (
-                                <section className="grid md:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-3 grid-cols-2">
+                            {dataProducts?.data?.length > 0 ? (
+                                <section className="grid lg:grid-cols-3 lg:gap-6 gap-4 mx-8 my-6 md:grid-cols-2">
                                     {dataProducts.data?.map((product) => (
                                         <Link
                                             key={product.id}
@@ -274,12 +221,14 @@ const ManIndex = () => {
                             )}
                         </div>
                     )}
-                    {error !== null
-                        ? console.log('Error de conexión', 'error')
-                        : null}
+                    {error && (
+                        <div className="text-red-500">
+                            Error al cargar los datos. Por favor, inténtalo de
+                            nuevo más tarde.
+                        </div>
+                    )}
                 </div>
             </div>
-
             <picture className="my-8">
                 <img src={posterFashionMan} alt="outlet" />
             </picture>

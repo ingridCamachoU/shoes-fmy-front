@@ -26,7 +26,7 @@ const AccesoriesIndex = () => {
             ) : (
                 <div className="w-full max-w-screen-xl">
                     {dataProducts.data?.length > 0 ? (
-                        <section className="grid md:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-3 grid-cols-2">
+                        <section className="grid md:grid-cols-3 lg:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-2 grid-cols-1">
                             {dataProducts.data?.map((product) => (
                                 <Link
                                     key={product.id}

@@ -7,6 +7,7 @@ import Poster from '../../components/poster/poster';
 import StoreInformation from '../../components/store-inf/store-information';
 
 import poster from '../../assets/home/poster-home.svg';
+import posterMovil from '../../assets/home/poster-movil-home.svg';
 import woman from '../../assets/home/woman.svg';
 import man from '../../assets/home/man.svg';
 import cali from '../../assets/home/store-cali.svg';
@@ -22,7 +23,10 @@ const Home = () => {
     return (
         <LayoutBase>
             <div>
-                <img src={poster} alt="poster home" />
+                <picture>
+                    <source srcSet={posterMovil} media="(max-width:640px)" />
+                    <img src={poster} alt="postPage" />
+                </picture>
             </div>
             <h1 className="text-2xl	font-bold mt-4">NUEVA COLECCIÓN</h1>
             <div className="w-full max-w-screen-xl">
@@ -31,7 +35,7 @@ const Home = () => {
                 ) : (
                     <div className="w-full max-w-screen-xl">
                         {dataProduct?.data?.length > 0 ? (
-                            <section className="grid md:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-3 grid-cols-2">
+                            <section className="grid md:grid-cols-3 lg:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-2 grid-cols-1">
                                 {dataProduct.data?.map((product) => (
                                     <Link
                                         key={product.id}

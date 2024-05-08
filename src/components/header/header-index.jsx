@@ -1,5 +1,7 @@
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
+    Bars3Icon,
     MagnifyingGlassIcon,
     ShoppingCartIcon,
     UserIcon,
@@ -7,11 +9,10 @@ import {
 } from '@heroicons/react/24/solid';
 import logo from '../../assets/logo.svg';
 import { useUserContext } from '../../context/user-contex';
-import { endPoints } from '../../service/endPoints/endPoints';
-import { useEffect, useState } from 'react';
-import { useForm } from '../../hooks/useForm';
 
 const Header = () => {
+    const { countProducts, setSearch } = useUserContext();
+
     const activesStyle = 'cursor-pointer underline underline-offset-8 text-lg';
     const disabledStyle = 'flex hover:underline underline-offset-8 text-lg';
 
@@ -19,11 +20,19 @@ const Header = () => {
         search: '',
     };
 
-    const { countProducts, search, setSearch, setUrlProduct } =
-        useUserContext();
+    const Links = [
+        { name: 'INICIO', link: '/' },
+        { name: 'MUJER', link: 'mujer' },
+        { name: 'HOMBRE', link: 'hombre' },
+        { name: 'COMPLEMENTOS', link: 'complementos' },
+        { name: 'BLOG', link: 'blog' },
+    ];
 
     const [openModal, setOpenModal] = useState(false);
     const [formData, setFormData] = useState(initialSearch);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const menuRef = useRef(null);
 
     const handleSearch = (e) => {
         setSearch(e.target.value);
@@ -54,15 +63,28 @@ const Header = () => {
         setFormData(initialSearch);
     };
 
-    const Links = [
-        { name: 'INICIO', link: '/' },
-        { name: 'MUJER', link: 'mujer' },
-        { name: 'HOMBRE', link: 'hombre' },
-        { name: 'COMPLEMENTOS', link: 'complementos' },
-        { name: 'BLOG', link: 'blog' },
-    ];
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
 
-    useEffect(() => {});
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuRef]);
+
     return (
         <header className="flex justify-between w-full bg-background-black py-4 px-8 items-center">
             <div>
@@ -70,12 +92,25 @@ const Header = () => {
                     <img src={logo} alt="Logo FMY" className="w-40 h-12" />
                 </Link>
             </div>
-            <nav>
-                <ul className="flex gap-4 text-text-yellow">
+
+            <nav
+                ref={menuRef}
+                className={`${
+                    isMenuOpen
+                        ? 'absolute top-16 left-0 w-full bg-background-black z-10 py-4 pl-20'
+                        : 'md:block hidden'
+                } md:flex`}
+            >
+                <ul
+                    className={`flex ${
+                        isMenuOpen ? 'flex-col items-start' : ''
+                    } gap-4 text-text-yellow`}
+                >
                     {Links.map((link) => (
                         <li key={link.name}>
                             <NavLink
                                 to={link.link}
+                                onClick={closeMenu}
                                 className={({ isActive }) =>
                                     isActive ? activesStyle : disabledStyle
                                 }
@@ -86,10 +121,18 @@ const Header = () => {
                     ))}
                 </ul>
             </nav>
+
             <div className="flex justify-between gap-4">
+                <button className="md:hidden flex" onClick={toggleMenu}>
+                    {!isMenuOpen ? (
+                        <Bars3Icon className="h-6 w-6 text-text-yellow cursor-pointer hover:text-yellow-200" />
+                    ) : (
+                        <XMarkIcon className="h-6 w-6 text-text-yellow cursor-pointer hover:text-yellow-200" />
+                    )}
+                </button>
                 <Link>
                     <MagnifyingGlassIcon
-                        className="h-6 w-6 text-text-yellow"
+                        className="h-6 w-6 text-text-yellow hover:text-yellow-200"
                         onClick={open}
                     />
                     <div
@@ -103,18 +146,18 @@ const Header = () => {
                         <form
                             className={`${
                                 openModal
-                                    ? 'shadow-xl lg:p-2 rounded-lg flex absolute flex-col lg:w-[450px] flex-wrap md:w-4/6 sm:w-4/6 w-10/12 p-2 top-14 right-24 bg-yellow-500'
+                                    ? 'shadow-xl lg:p-2 rounded-lg flex absolute flex-col lg:w-[450px] flex-wrap md:w-4/6 sm:w-4/6 w-10/12 p-2 top-8 right-8 bg-yellow-500'
                                     : 'hidden'
                             }`}
                             onClick={handleModalClick}
                         >
-                            <div className="flex">
+                            <div className="flex justify-between">
                                 <input
                                     type="text"
                                     placeholder="Search"
                                     name="search"
                                     value={formData.search}
-                                    className="lg:w-full w-8/12 px-4 border py-1 rounded-lg h-10 flex cursor-pointer text-balck "
+                                    className="w-full px-4 border py-1 rounded-lg h-10 flex cursor-pointer text-balck"
                                     onChange={handleSearch}
                                 />
                                 <span
@@ -128,13 +171,13 @@ const Header = () => {
                     </div>
                 </Link>
                 <Link to={''}>
-                    <UserIcon className="h-6 w-6 hover:text-text-blue text-text-yellow" />
+                    <UserIcon className="h-6 w-6 hover:text-text-blue text-text-yellow hover:text-yellow-200" />
                 </Link>
                 <Link to="shopping">
                     <p className="flex justify-center">
-                        <ShoppingCartIcon className="h-6 w-6 text-text-yellow" />
+                        <ShoppingCartIcon className="h-6 w-6 text-text-yellow hover:text-yellow-200" />
                         {countProducts !== 0 && (
-                            <span className="absolute text-yellow-800 font-bold bg-white rounded-3xl h-5 w-5 text-md p-1 items-center flex justify-center mt-3 text-sm border-yellow-700 border-solid border-2">
+                            <span className="absolute text-yellow-800 font-bold bg-white rounded-3xl h-5 w-5 text-md p-1 items-center flex justify-center mt-3 text-sm border-yellow-700 border-solid border-2 hover:shadow-yellow-200 hover:shadow-md">
                                 {countProducts}
                             </span>
                         )}
