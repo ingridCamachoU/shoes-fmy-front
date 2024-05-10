@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { endPoints } from '../service/endPoints/endPoints';
 import { useFetch } from '../hooks/useFetch';
 import { useLocation } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 const UserContext = createContext();
 
@@ -15,6 +17,9 @@ export default function UserContextProvider({ children }) {
     const [countProducts, setCountProducts] = useState(
         JSON.parse(localStorage.getItem('count')) || 0
     );
+
+    //--user--//
+    const [user, setUser] = useState(false);
 
     // search
     const [search, setSearch] = useState('');
@@ -47,6 +52,10 @@ export default function UserContextProvider({ children }) {
             setSearch('');
         }
         loadDataProduct();
+        const unsuscribe = onAuthStateChanged(auth, (user) => {
+            setUser(user);
+        });
+        return unsuscribe;
     }, [urlProduct, search, data.pathname]);
 
     // Save localStorage
@@ -138,6 +147,7 @@ export default function UserContextProvider({ children }) {
                 total,
                 setCountProducts,
                 setTotal,
+                user,
 
                 dataProduct,
                 setUrlProduct,

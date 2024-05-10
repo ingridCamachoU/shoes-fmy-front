@@ -53,9 +53,12 @@ const Home = () => {
                         )}
                     </div>
                 )}
-                {error !== null
-                    ? console.log('Error de conexión', 'error')
-                    : null}
+                {error && (
+                    <div className="text-red-500">
+                        Error al cargar los datos. Por favor, inténtalo de nuevo
+                        más tarde.
+                    </div>
+                )}
             </div>
 
             <Poster

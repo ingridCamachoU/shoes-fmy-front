@@ -22,10 +22,10 @@ const Header = () => {
 
     const Links = [
         { name: 'INICIO', link: '/' },
-        { name: 'MUJER', link: 'mujer' },
-        { name: 'HOMBRE', link: 'hombre' },
-        { name: 'COMPLEMENTOS', link: 'complementos' },
-        { name: 'BLOG', link: 'blog' },
+        { name: 'MUJER', link: '/mujer' },
+        { name: 'HOMBRE', link: '/hombre' },
+        { name: 'COMPLEMENTOS', link: '/complementos' },
+        { name: 'BLOG', link: '/blog' },
     ];
 
     const [openModal, setOpenModal] = useState(false);
@@ -170,10 +170,10 @@ const Header = () => {
                         </form>
                     </div>
                 </Link>
-                <Link to={''}>
+                <Link to="/login">
                     <UserIcon className="h-6 w-6 hover:text-text-blue text-text-yellow hover:text-yellow-200" />
                 </Link>
-                <Link to="shopping">
+                <Link to="/shopping">
                     <p className="flex justify-center">
                         <ShoppingCartIcon className="h-6 w-6 text-text-yellow hover:text-yellow-200" />
                         {countProducts !== 0 && (

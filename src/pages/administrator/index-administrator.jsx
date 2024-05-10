@@ -173,7 +173,7 @@ const IndexAdministrator = () => {
                     <div className="flex my-8 font-bold text-lg justify-center gap-6">
                         <h2>Categorias</h2>
                         <button
-                            className=" text-text-ligth px-1 rounded-lg bg-btn-blue"
+                            className=" text-text-ligth px-1 rounded-lg bg-btn-blue hover:bg-btn-blueHover"
                             onClick={addCategorie}
                         >
                             <PlusCircleIcon className="h-5 w-5 font-bold" />
@@ -255,9 +255,13 @@ const IndexAdministrator = () => {
                                             </tbody>
                                         </table>
                                     )}
-                                    {errorCategorie !== null
-                                        ? console.log('Error de conexión')
-                                        : null}
+
+                                    {errorCategorie && (
+                                        <div className="text-red-500">
+                                            Error al cargar los datos. Por
+                                            favor, inténtalo de nuevo más tarde.
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -268,10 +272,10 @@ const IndexAdministrator = () => {
                     <div className="flex my-8 font-bold text-lg justify-center gap-6">
                         <h2>Tallas</h2>
                         <button
-                            className=" text-text-ligth px-1 rounded-lg bg-btn-blue"
+                            className=" text-text-ligth px-1 rounded-lg bg-btn-blue hover:bg-btn-blueHover"
                             onClick={addSize}
                         >
-                            <PlusCircleIcon className="h-5 w-5 font-bold" />
+                            <PlusCircleIcon className="h-5 w-5 font-bold " />
                         </button>
                     </div>
                     <div className="flex flex-col lg:overflow-hidden overflow-x-auto w-4/5">
@@ -336,9 +340,13 @@ const IndexAdministrator = () => {
                                             </tbody>
                                         </table>
                                     )}
-                                    {errorSize !== null
-                                        ? console.log('Error de conexión')
-                                        : null}
+
+                                    {errorSize && (
+                                        <div className="text-red-500">
+                                            Error al cargar los datos. Por
+                                            favor, inténtalo de nuevo más tarde.
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -349,10 +357,10 @@ const IndexAdministrator = () => {
             <div className="flex pt-8 my-8 font-bold text-lg gap-6">
                 <h2>Productos</h2>
                 <button
-                    className=" text-text-ligth px-1 rounded-lg bg-btn-blue"
+                    className=" text-text-ligth px-1 rounded-lg bg-btn-blue hover:bg-btn-blueHover"
                     onClick={addProduct}
                 >
-                    <PlusCircleIcon className="h-5 w-5 font-bold" />
+                    <PlusCircleIcon className="h-5 w-5 font-bold " />
                 </button>
             </div>
             <div className="flex flex-col w-4/5 lg:overflow-hidden overflow-x-auto">
@@ -467,9 +475,12 @@ const IndexAdministrator = () => {
                                 </table>
                             )}
 
-                            {errorProducts !== null
-                                ? console.log('Error de conexión')
-                                : null}
+                            {errorProducts && (
+                                <div className="text-red-500">
+                                    Error al cargar los datos. Por favor,
+                                    inténtalo de nuevo más tarde.
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
