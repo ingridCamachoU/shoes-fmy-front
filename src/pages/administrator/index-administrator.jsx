@@ -1,4 +1,3 @@
-import LayoutBase from '../../layout/layout-base';
 import {
     PencilIcon,
     EyeIcon,
@@ -16,6 +15,7 @@ import Loading from '../../components/Loading';
 import { converterPrice } from '../../utils/converter';
 import FormAddCategorie from './categorie/form-Categorie';
 import FormAddSize from './size/form-size';
+import { useUserContext } from '../../context/user-contex';
 
 const IndexAdministrator = () => {
     const [
@@ -28,6 +28,8 @@ const IndexAdministrator = () => {
         isOpenModalCreateSize,
         setIsOpenModalCreateSize,
     ] = useModal();
+
+    const { token } = useUserContext();
 
     //----------------------------- PRODUCTS----------------------------- //
     const [titleProduct, setTitleProduct] = useState('');
@@ -62,6 +64,7 @@ const IndexAdministrator = () => {
             method: 'DELETE',
             title: 'El producto ha sido eliminado',
             icon: 'success',
+            token: token,
             loadData: loadDataProducts,
         };
         confirAlert(
@@ -107,6 +110,7 @@ const IndexAdministrator = () => {
             method: 'DELETE',
             title: 'La categoria ha sido eliminada',
             icon: 'success',
+            token: token,
             loadData: loadDataCategories,
         };
         confirAlert(
@@ -126,15 +130,13 @@ const IndexAdministrator = () => {
 
     //-----------------------------SIZES----------------------------- //
 
-    const [editDataSize, setEditDataSize] = useState(null);
-
     //--- Load Data sizes---//
     const urlSize = endPoints.sizes.getSize;
     const {
         data: dataSize,
         loading: loadingSize,
-        error: errorSize,
         loadingData: loadDataSize,
+        error: errorSize,
     } = useFetch(urlSize);
 
     //Delete sizes//
@@ -144,6 +146,7 @@ const IndexAdministrator = () => {
             method: 'DELETE',
             title: 'La talla ha sido eliminada',
             icon: 'success',
+            token: token,
             loadData: loadDataSize,
         };
         confirAlert(
@@ -164,13 +167,13 @@ const IndexAdministrator = () => {
         loadDataProducts();
         loadDataCategories();
         loadDataSize();
-    }, [urlProduct, urlCategorie]);
+    }, [urlProduct, urlCategorie, urlSize]);
 
     return (
-        <LayoutBase>
+        <div className="w-full flex justify-center flex-col items-center">
             <div className="flex w-4/5 justify-between flex-col sm:flex-row">
                 <div className="sm:w-2/4 w-full">
-                    <div className="flex my-8 font-bold text-lg justify-center gap-6">
+                    <div className="flex my-8 font-bold justify-center gap-6 text-2xl">
                         <h2>Categorias</h2>
                         <button
                             className=" text-text-ligth px-1 rounded-lg bg-btn-blue hover:bg-btn-blueHover"
@@ -186,7 +189,7 @@ const IndexAdministrator = () => {
                                     {loadingCategorie ? (
                                         <Loading />
                                     ) : (
-                                        <table className="w-full text-center  font-light pb-4 mb-4">
+                                        <table className="w-full text-center font-light pb-4 mb-4">
                                             <thead>
                                                 <tr className=" text-text-ligth">
                                                     <th className="px-2 py-2 font-medium text-lg">
@@ -269,7 +272,7 @@ const IndexAdministrator = () => {
                 </div>
 
                 <div className="sm:w-2/4 w-full">
-                    <div className="flex my-8 font-bold text-lg justify-center gap-6">
+                    <div className="flex my-8 font-bold justify-center gap-6 text-2xl">
                         <h2>Tallas</h2>
                         <button
                             className=" text-text-ligth px-1 rounded-lg bg-btn-blue hover:bg-btn-blueHover"
@@ -354,7 +357,7 @@ const IndexAdministrator = () => {
                 </div>
             </div>
 
-            <div className="flex pt-8 my-8 font-bold text-lg gap-6">
+            <div className="flex pt-8 my-8 gap-6 font-bold text-2xl">
                 <h2>Productos</h2>
                 <button
                     className=" text-text-ligth px-1 rounded-lg bg-btn-blue hover:bg-btn-blueHover"
@@ -494,6 +497,7 @@ const IndexAdministrator = () => {
                 setEditDataProduct={setEditDataProduct}
                 loadDataProducts={loadDataProducts}
                 dataCategorie={dataCategorie}
+                dataSize={dataSize}
             />
 
             <FormAddCategorie
@@ -510,7 +514,7 @@ const IndexAdministrator = () => {
                 isOpenModalCreateSize={isOpenModalCreateSize}
                 loadDataSize={loadDataSize}
             />
-        </LayoutBase>
+        </div>
     );
 };
 

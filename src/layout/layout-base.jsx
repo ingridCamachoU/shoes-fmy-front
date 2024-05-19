@@ -1,9 +1,5 @@
 const LayoutBase = ({ children }) => {
-    return (
-        <main className="flex flex-col items-center justify-center mb-6 min-h-full">
-            {children}
-        </main>
-    );
+    return <div className="flex flex-col min-h-screen">{children}</div>;
 };
 
 export default LayoutBase;

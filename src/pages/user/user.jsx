@@ -1,14 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import LayoutBase from '../../layout/layout-base';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../context/user-contex';
-import { logout } from '../../config/firebase';
 
 const User = () => {
-    const { user } = useUserContext();
+    const { user, setUser, setToken } = useUserContext();
+    const navigate = useNavigate();
 
     const validation = () => {
-        if (user && user.email === 'injuca28@hotmail.com') {
+        if (user && user.role === 'administrador') {
             return <Link to="products">Productos</Link>;
         }
         return null;
@@ -16,20 +14,28 @@ const User = () => {
 
     const handleLogout = async () => {
         try {
-            await logout();
+            setUser(false);
+            setToken(false);
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            navigate('/login'); // Redirigir al login
         } catch (error) {
             console.log(error);
         }
     };
 
     return (
-        <LayoutBase>
-            <div className="relative h-full">
-                <button onClick={handleLogout}>salir</button>
-                <h1>Mi cuenta</h1>
-                {validation()}
-            </div>
-        </LayoutBase>
+        <div className="relative h-full">
+            <button onClick={handleLogout}>Salir</button>
+
+            <h1 className="text-2xl	font-bold mt-4">MI CUENTA</h1>
+
+            <p>Nombre: {user.name}</p>
+            <p>Correo: {user.email}</p>
+            <p>Telefono: {user.phone}</p>
+            <p>Dirección: {user.address}</p>
+            {validation()}
+        </div>
     );
 };
 

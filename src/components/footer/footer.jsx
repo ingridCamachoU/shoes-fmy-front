@@ -10,7 +10,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className="mt-auto">
+        <footer className="mt-auto w-full">
             <div className="flex bg-gray-200 p-10 justify-between">
                 <div>
                     <h4 className="font-bold">SUSCRÍBETE</h4>

@@ -4,6 +4,7 @@ import { initialFormCategorie } from '../../../utils/initialialization';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { endPoints } from '../../../service/endPoints/endPoints';
 import { helpAxios } from '../../../service/helpAxios';
+import { useUserContext } from '../../../context/user-contex';
 
 const FormAddCategorie = ({
     titleCategorie,
@@ -14,6 +15,8 @@ const FormAddCategorie = ({
     loadDataCategories,
 }) => {
     const [formData, handleChange, setFormData] = useForm(initialFormCategorie);
+
+    const { token } = useUserContext();
 
     //---Form Validation---//
     const [errors, setErrors] = useState({});
@@ -64,6 +67,7 @@ const FormAddCategorie = ({
                         body: formData,
                         title: 'Categoria editada con éxito',
                         icon: 'success',
+                        token: token,
                         loadData: loadDataCategories,
                     };
                     helpAxios(config);
@@ -77,6 +81,7 @@ const FormAddCategorie = ({
                         body: formData,
                         title: 'Categoria agregada',
                         icon: 'success',
+                        token: token,
                         loadData: loadDataCategories,
                     };
                     helpAxios(config);

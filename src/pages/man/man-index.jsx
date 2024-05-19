@@ -62,11 +62,11 @@ const ManIndex = () => {
     }, [urlProduct, urlCategorie, urlSize]);
 
     return (
-        <LayoutBase>
+        <div>
             <div>
-                <h1 className="font-bold text-2xl my-4">HOMBRE</h1>
+                <h1 className="font-bold text-2xl my-8 mx-6">HOMBRE</h1>
             </div>
-            <div className="w-full max-w-screen-xl flex my-4">
+            <div className="w-full flex my-4">
                 <div className="w-1/5">
                     <form className="ml-4">
                         <button
@@ -234,7 +234,7 @@ const ManIndex = () => {
             </picture>
 
             <StoreInformation />
-        </LayoutBase>
+        </div>
     );
 };
 

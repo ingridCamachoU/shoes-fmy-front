@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from '../../../hooks/useForm';
-import {
-    initialFormCategorie,
-    initialFormSize,
-} from '../../../utils/initialialization';
+import { initialFormSize } from '../../../utils/initialialization';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { endPoints } from '../../../service/endPoints/endPoints';
 import { helpAxios } from '../../../service/helpAxios';
+import { useUserContext } from '../../../context/user-contex';
 
 const FormAddSize = ({
     setIsOpenModalCreateSize,
@@ -14,6 +12,7 @@ const FormAddSize = ({
     loadDataSize,
 }) => {
     const [formData, handleChange, setFormData] = useForm(initialFormSize);
+    const { token } = useUserContext();
 
     //---Form Validation---//
     const [errors, setErrors] = useState({});
@@ -38,10 +37,10 @@ const FormAddSize = ({
         setFormData(initialFormSize);
     };
 
+    console.log(formData);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const err = onValidate(formData);
         setErrors(err);
 
         if (Object.keys(err).length === 0) {
@@ -52,11 +51,13 @@ const FormAddSize = ({
                     body: formData,
                     title: 'Talla Agregada',
                     icon: 'success',
+                    token: token,
                     loadData: loadDataSize,
                 };
                 helpAxios(config);
                 setFormData(initialFormSize);
                 setIsOpenModalCreateSize(false);
+                setErrors('');
             }
         } else {
             setErrors(err);
@@ -96,10 +97,10 @@ const FormAddSize = ({
                     <div className="flex-col flex w-full">
                         <label>Numero</label>
                         <input
-                            type="text"
+                            type="number"
                             required
                             className="border border-border-gray rounded-lg p-1"
-                            name="name"
+                            name="number"
                             value={formData.number}
                             onChange={handleChange}
                         />

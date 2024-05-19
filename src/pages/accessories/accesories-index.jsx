@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import LayoutBase from '../../layout/layout-base';
 import { endPoints } from '../../service/endPoints/endPoints';
 import Card from '../../components/card/card-product';
 import { Link } from 'react-router-dom';
@@ -20,11 +19,11 @@ const AccesoriesIndex = () => {
         loadDataProducts();
     }, [urlProduct]);
     return (
-        <LayoutBase>
+        <div>
             {loading ? (
                 <Loading />
             ) : (
-                <div className="w-full max-w-screen-xl">
+                <div className="w-full max-w-screen-2xl">
                     {dataProducts.data?.length > 0 ? (
                         <section className="grid md:grid-cols-3 lg:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-2 grid-cols-1">
                             {dataProducts.data?.map((product) => (
@@ -50,7 +49,7 @@ const AccesoriesIndex = () => {
                     tarde.
                 </div>
             )}
-        </LayoutBase>
+        </div>
     );
 };
 

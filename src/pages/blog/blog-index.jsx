@@ -1,4 +1,3 @@
-import LayoutBase from '../../layout/layout-base';
 import Poster from '../../components/poster/poster';
 import CardArticule from '../../components/card/card-articule';
 import CardUser from '../../components/card/card-user';
@@ -20,18 +19,18 @@ import userYoung from '../../assets/blog/user-young.svg';
 
 const BlogIndex = () => {
     return (
-        <LayoutBase>
+        <div>
             <picture>
                 <img src={poster} alt="poster blog" />
             </picture>
 
-            <section className="flex max-w-screen-xl md:px-16 px-2 md:my-10 my-2 md:flex-row flex-col justify-center items-center">
+            <section className="flex max-w-screen-2xl md:px-16 px-2 md:my-10 my-2 md:flex-row flex-col justify-center items-center">
                 <img
                     src={photography}
                     alt="hombre fotografiando"
-                    className="md:ml-4 ml-2 md:w-2/5 w-1/2 mt-6 md:mt-2"
+                    className=" md:w-2/5 w-1/2 mt-6 md:mt-2"
                 />
-                <div className="m-6">
+                <div className="mx-8">
                     <p>
                         ¿Qué es Lorem Ipsum? Lorem Ipsum es simplemente el texto
                         de relleno de las imprentas y archivos de texto. Lorem
@@ -56,8 +55,8 @@ const BlogIndex = () => {
                 </div>
             </section>
 
-            <div className="w-full max-w-screen-xl">
-                <section className="grid md:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-3 grid-cols-2">
+            <div className="w-full max-w-screen-2xl">
+                <section className="grid md:grid-cols-4 lg:gap-8 gap-6 my-6 sm:grid-cols-3 grid-cols-2">
                     <CardArticule
                         img={shoesGreen}
                         alt="Zapatos verdes"
@@ -94,7 +93,7 @@ const BlogIndex = () => {
                 link2=""
             />
 
-            <section className="flex max-w-[1128px] px-8 p-6 md:flex-row flex-col bg-gray-300 items-center md:justify-between justify-center mt-8 mx-8 gap-4">
+            <section className="flex max-w-screen-2xl px-8 p-6 md:flex-row flex-col bg-gray-300 items-center md:justify-between justify-center mt-8 mx-4 gap-4 ml-2">
                 <div className="bg-background-white md:w-1/4 w-11/12 flex justify-center">
                     <img src={skateboard} alt="" />
                 </div>
@@ -110,13 +109,13 @@ const BlogIndex = () => {
                     No sólo sobrevivió 500 años, sino que tambien.
                 </p>
 
-                <div className="flex md:flex-col flex-row justify-between items-center md:w-1/4 w-11/12 gap-6">
+                <div className="flex md:flex-col flex-row justify-between items-center md:w-1/4 w-11/12 gap-8">
                     <img src={socks} alt="" />
                     <img src={socksShoes} alt="" />
                 </div>
             </section>
 
-            <section className="md:flex-row flex-col flex justify-between pt-4 gap-8 max-w-[1128px] m-2">
+            <section className="md:flex-row flex-col flex justify-between pt-4 gap-8  max-w-screen-2xl m-2">
                 <CardUser
                     img={userMan}
                     title="¿Qué es Lorem Ipsum?"
@@ -135,7 +134,7 @@ const BlogIndex = () => {
                     text="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500."
                 />
             </section>
-        </LayoutBase>
+        </div>
     );
 };
 

@@ -4,6 +4,7 @@ import { initialFormProduct } from '../../../utils/initialialization';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { endPoints } from '../../../service/endPoints/endPoints';
 import { helpAxios } from '../../../service/helpAxios';
+import { useUserContext } from '../../../context/user-contex';
 
 const FormAddProducts = ({
     titleProduct,
@@ -13,8 +14,11 @@ const FormAddProducts = ({
     setEditDataProduct,
     loadDataProducts,
     dataCategorie,
+    dataSize,
 }) => {
     const [formData, handleChange, setFormData] = useForm(initialFormProduct);
+
+    const { token } = useUserContext();
 
     //---Form Validation---//
     const [errors, setErrors] = useState({});
@@ -104,6 +108,7 @@ const FormAddProducts = ({
                         body: formData,
                         title: 'Producto editado con éxito',
                         icon: 'success',
+                        token: token,
                         loadData: loadDataProducts,
                     };
                     helpAxios(config);
@@ -117,6 +122,7 @@ const FormAddProducts = ({
                         body: formData,
                         title: 'Producto agregado',
                         icon: 'success',
+                        token: token,
                         loadData: loadDataProducts,
                     };
                     helpAxios(config);
@@ -284,13 +290,11 @@ const FormAddProducts = ({
                         <label>Tallas</label>
                         <select className="border rounded-lg mr-4 p-1 w-full">
                             <option></option>
-                            <option value="blanco">Blanco</option>
-                            <option value="negro">Negro</option>
-                            <option value="Beige">Beige</option>
-                            <option value="Rojo">Rojo</option>
-                            <option value="Azul">Azul</option>
-                            <option value="Verde">Verde</option>
-                            <option value="Camel">Camel</option>
+                            {dataSize.data?.map((size) => (
+                                <option key={size.id} value={size.id}>
+                                    {size.number}
+                                </option>
+                            ))}
                         </select>
                     </div>
                 </div>

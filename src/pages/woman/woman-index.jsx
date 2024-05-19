@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFetch } from '../../hooks/useFetch';
-import LayoutBase from '../../layout/layout-base';
 import { endPoints } from '../../service/endPoints/endPoints';
 import Loading from '../../components/Loading';
 import Card from '../../components/card/card-product';
@@ -63,11 +62,11 @@ const WomanIndex = () => {
     }, [urlProduct, urlCategorie, urlSize]);
 
     return (
-        <LayoutBase>
+        <div>
             <div>
-                <h1 className="font-bold text-2xl my-4">MUJER</h1>
+                <h1 className="font-bold text-2xl my-6 mx-6">MUJER</h1>
             </div>
-            <div className="w-full max-w-screen-xl flex my-4">
+            <div className="w-full flex my-4">
                 <div className="w-1/5">
                     <form className="ml-4">
                         <button
@@ -240,7 +239,7 @@ const WomanIndex = () => {
             </picture>
 
             <StoreInformation />
-        </LayoutBase>
+        </div>
     );
 };
 

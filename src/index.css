@@ -32,8 +32,13 @@
     background: #ffff;
     min-width: 100%;
     min-height: 100vh;
-    overflow: auto;
     display: flex;
     flex-direction: column;
     font-family: "Inconsolata", monospace;
+}
+
+html,
+body,
+#root {
+    height: 100%;
 }

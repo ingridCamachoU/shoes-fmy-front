@@ -39,4 +39,12 @@ export const endPoints = {
         getOrders: `${URL}${VERSION}/orders/`,
         deleteOrders: (id) => `${URL}${VERSION}/orders/${id}/`,
     },
+    users: {
+        getUser: `${URL}${VERSION}/users/`,
+        deleUser: (id) => `${URL}${VERSION}/users/${id}/`,
+        updateUser: (id) => `${URL}${VERSION}/users/${id}/`,
+    },
+    login: {
+        getLogin: `${URL}${VERSION}/users/login`,
+    },
 };

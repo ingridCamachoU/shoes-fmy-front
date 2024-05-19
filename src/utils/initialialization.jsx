@@ -18,3 +18,8 @@ export const initialFormCategorie = {
 export const initialFormSize = {
     number: '',
 };
+
+export const initialFormLogin = {
+    email: '',
+    password: '',
+};

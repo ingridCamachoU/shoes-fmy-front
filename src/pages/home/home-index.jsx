@@ -15,25 +15,26 @@ import medellin from '../../assets/home/store-medellin.svg';
 import bogota from '../../assets/home/store-bogota.svg';
 import outletHome from '../../assets/home/outlet-home.svg';
 
-import LayoutBase from '../../layout/layout-base';
 import { useUserContext } from '../../context/user-contex';
 
 const Home = () => {
     const { loading, dataProduct, error } = useUserContext();
     return (
-        <LayoutBase>
+        <div>
             <div>
-                <picture>
+                <picture className="flex ml-4">
                     <source srcSet={posterMovil} media="(max-width:640px)" />
                     <img src={poster} alt="postPage" />
                 </picture>
             </div>
-            <h1 className="text-2xl	font-bold mt-4">NUEVA COLECCIÓN</h1>
-            <div className="w-full max-w-screen-xl">
+            <h1 className="text-2xl	font-bold mt-8 justify-center flex">
+                NUEVA COLECCIÓN
+            </h1>
+            <div className="w-full flex justify-center my-6">
                 {loading ? (
                     <Loading />
                 ) : (
-                    <div className="w-full max-w-screen-xl">
+                    <div className="w-full max-w-screen-2xl">
                         {dataProduct?.data?.length > 0 ? (
                             <section className="grid md:grid-cols-3 lg:grid-cols-4 lg:gap-8 gap-6 mx-8 my-6 sm:grid-cols-2 grid-cols-1">
                                 {dataProduct.data?.map((product) => (
@@ -96,7 +97,7 @@ const Home = () => {
             <picture className="my-6">
                 <img src={outletHome} alt="outlet" />
             </picture>
-        </LayoutBase>
+        </div>
     );
 };
 

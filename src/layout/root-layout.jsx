@@ -7,9 +7,12 @@ import WhaspBtn from '../components/WhaspBtn';
 const RootLayout = () => {
     return (
         <UserContexProvider>
-            <div>
+            <div className="flex flex-col min-h-screen">
                 <Header />
-                <Outlet />
+                <main className="flex-grow flex flex-col items-center justify-center mb-6">
+                    <Outlet />
+                </main>
+
                 <WhaspBtn />
                 <Footer />
             </div>

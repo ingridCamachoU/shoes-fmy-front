@@ -1,9 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { endPoints } from '../service/endPoints/endPoints';
 import { useFetch } from '../hooks/useFetch';
-import { useLocation } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../config/firebase';
 
 const UserContext = createContext();
 
@@ -20,6 +18,7 @@ export default function UserContextProvider({ children }) {
 
     //--user--//
     const [user, setUser] = useState(false);
+    const [token, setToken] = useState(false);
 
     // search
     const [search, setSearch] = useState('');
@@ -46,16 +45,19 @@ export default function UserContextProvider({ children }) {
     };
 
     useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        const storedUser = localStorage.getItem('user');
+        if (storedToken && storedUser) {
+            // Restaurar el estado de la sesión del usuario
+            setUser(JSON.parse(storedUser)); // O cualquier lógica que tengas para manejar la autenticación
+            setToken(storedToken);
+        }
         url();
         if (data.pathname !== '/') {
             setUrlProduct(endPoints.products.getProducts);
             setSearch('');
         }
         loadDataProduct();
-        const unsuscribe = onAuthStateChanged(auth, (user) => {
-            setUser(user);
-        });
-        return unsuscribe;
     }, [urlProduct, search, data.pathname]);
 
     // Save localStorage
@@ -148,7 +150,9 @@ export default function UserContextProvider({ children }) {
                 setCountProducts,
                 setTotal,
                 user,
-
+                setUser,
+                token,
+                setToken,
                 dataProduct,
                 setUrlProduct,
                 urlProduct,
