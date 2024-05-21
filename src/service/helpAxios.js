@@ -18,7 +18,6 @@ export const helpAxios = async ({
         };
     }
 
-    console.log(token);
     if (token) {
         header['Authorization'] = `Bearer ${token}`;
     }
@@ -31,7 +30,7 @@ export const helpAxios = async ({
         data: data,
     };
 
-    console.log('confi:', config);
+    console.log('confi:', config.data);
     try {
         const response = await axios(config);
         alert(title, icon);
@@ -40,8 +39,9 @@ export const helpAxios = async ({
         }
         return response.data;
     } catch (error) {
-        const errorCodigo = error.response.data.error;
+        const errorCodigo = error.response.data.message;
         console.log(errorCodigo);
+        console.log(error);
         alert(errorCodigo, 'error');
     }
 };

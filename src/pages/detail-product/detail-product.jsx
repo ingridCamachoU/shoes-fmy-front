@@ -21,6 +21,8 @@ const DetailProduct = () => {
         loadDataProducts();
     }, [urlProduct]);
 
+    console.log(dataProducts);
+
     return (
         <LayoutBase>
             {dataProducts.data?.map((product) => (

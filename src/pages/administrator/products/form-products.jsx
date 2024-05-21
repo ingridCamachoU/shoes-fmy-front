@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from '../../../hooks/useForm';
 import { initialFormProduct } from '../../../utils/initialialization';
-import { XMarkIcon } from '@heroicons/react/24/solid';
+import { TrashIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { endPoints } from '../../../service/endPoints/endPoints';
 import { helpAxios } from '../../../service/helpAxios';
 import { useUserContext } from '../../../context/user-contex';
@@ -17,6 +17,7 @@ const FormAddProducts = ({
     dataSize,
 }) => {
     const [formData, handleChange, setFormData] = useForm(initialFormProduct);
+    const [selectedSizes, setSelectedSizes] = useState([]);
 
     const { token } = useUserContext();
 
@@ -61,78 +62,70 @@ const FormAddProducts = ({
         return errors;
     };
 
-    const err = onValidate(formData);
-
-    const closeModalReset = () => {
-        setErrors({});
-        setEditDataProduct(null);
-        setIsOpenModalAddProduct(false);
-        setFormData(initialFormProduct);
-    };
-
     useEffect(() => {
         if (editDataProduct !== null) {
             const copyData = {
-                code: editDataProduct?.code,
-                name: editDataProduct?.name,
-                description: editDataProduct?.description,
-                price: editDataProduct?.price,
-                stock: editDataProduct?.stock,
-                color: editDataProduct?.color,
-                category: editDataProduct?.category?.id,
-                gender: editDataProduct?.gender,
-                sizes: editDataProduct?.sizes,
-                images: editDataProduct?.images,
+                code: editDataProduct?.code || '',
+                name: editDataProduct?.name || '',
+                description: editDataProduct?.description || '',
+                price: editDataProduct?.price || '',
+                stock: editDataProduct?.stock || '',
+                color: editDataProduct?.color || '',
+                category: editDataProduct?.category?.id || '',
+                gender: editDataProduct?.gender || '',
+                images: editDataProduct?.images || '',
             };
             setFormData(copyData);
+            setSelectedSizes(editDataProduct?.sizes || []);
         } else {
             setFormData(initialFormProduct);
+            setSelectedSizes([]);
         }
-    }, [editDataProduct]);
+    }, [editDataProduct, setFormData]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const err = onValidate(formData);
         setErrors(err);
         if (Object.keys(err).length === 0) {
-            if (
-                formData.code !== '' &&
-                formData.name !== '' &&
-                formData.price !== ''
-            ) {
-                if (editDataProduct !== null) {
-                    const config = {
-                        url: endPoints.products.updateProduct(
-                            editDataProduct?.id
-                        ),
-                        method: 'PUT',
-                        body: formData,
-                        title: 'Producto editado con éxito',
-                        icon: 'success',
-                        token: token,
-                        loadData: loadDataProducts,
-                    };
-                    helpAxios(config);
-                    setFormData(initialFormProduct);
-                    setIsOpenModalAddProduct(false);
-                    setErrors('');
-                } else {
-                    const config = {
-                        url: endPoints.products.getProducts,
-                        method: 'POST',
-                        body: formData,
-                        title: 'Producto agregado',
-                        icon: 'success',
-                        token: token,
-                        loadData: loadDataProducts,
-                    };
-                    helpAxios(config);
-                    setFormData(initialFormProduct);
-                    setIsOpenModalAddProduct(false);
-                }
+            if (formData.code && formData.name && formData.price) {
+                const formDataWithSizes = { ...formData, sizes: selectedSizes };
+                const config = {
+                    url: editDataProduct
+                        ? endPoints.products.updateProduct(editDataProduct.id)
+                        : endPoints.products.getProducts,
+                    method: editDataProduct ? 'PUT' : 'POST',
+                    body: formDataWithSizes,
+                    title: editDataProduct
+                        ? 'Producto editado con éxito'
+                        : 'Producto agregado',
+                    icon: 'success',
+                    token: token,
+                    loadData: loadDataProducts,
+                };
+                helpAxios(config);
+                setFormData(initialFormProduct);
+                setIsOpenModalAddProduct(false);
+                setErrors({});
             }
         } else {
             setErrors(err);
         }
+    };
+
+    const handleSizeChange = (index, field, value) => {
+        const newSizes = [...selectedSizes];
+        newSizes[index] = { ...newSizes[index], [field]: value };
+        setSelectedSizes(newSizes);
+    };
+
+    const addNewSizeField = () => {
+        setSelectedSizes([...selectedSizes, { size_id: '', amount: '' }]);
+    };
+
+    const removeSizeField = (index) => {
+        const newSizes = selectedSizes.filter((_, i) => i !== index);
+        setSelectedSizes(newSizes);
     };
 
     const addImage = (e) => {
@@ -141,6 +134,14 @@ const FormAddProducts = ({
             ...formData,
             [name]: [value],
         });
+    };
+
+    const closeModalReset = () => {
+        setErrors({});
+        setEditDataProduct(null);
+        setIsOpenModalAddProduct(false);
+        setFormData(initialFormProduct);
+        setSelectedSizes([]);
     };
 
     const handleModalClick = (e) => e.stopPropagation();
@@ -280,7 +281,7 @@ const FormAddProducts = ({
                             <option></option>
                             {dataCategorie.data?.map((category) => (
                                 <option key={category.id} value={category.id}>
-                                    {category.name}
+                                    {category?.name}
                                 </option>
                             ))}
                         </select>
@@ -288,14 +289,70 @@ const FormAddProducts = ({
 
                     <div className="flex-col flex md:w-1/2 w-11/12">
                         <label>Tallas</label>
-                        <select className="border rounded-lg mr-4 p-1 w-full">
-                            <option></option>
-                            {dataSize.data?.map((size) => (
-                                <option key={size.id} value={size.id}>
-                                    {size.number}
-                                </option>
-                            ))}
-                        </select>
+                        {selectedSizes.map((selectedSize, index) => (
+                            <div key={index} className="flex mb-2 gap-2">
+                                <select
+                                    className="border rounded-lg mr-4 p-1 w-1/2  cursor-pointer"
+                                    value={selectedSize.size_id || ''}
+                                    onChange={(e) =>
+                                        handleSizeChange(
+                                            index,
+                                            'size_id',
+                                            e.target.value
+                                        )
+                                    }
+                                >
+                                    <option
+                                        className="flex text-center"
+                                        value={selectedSize?.number}
+                                    >
+                                        {selectedSize?.number
+                                            ? selectedSize?.number
+                                            : 'Talla'}
+                                    </option>
+                                    {dataSize.data?.map((availableSize) => (
+                                        <option
+                                            key={availableSize.id}
+                                            value={availableSize.id}
+                                        >
+                                            {availableSize.number}
+                                        </option>
+                                    ))}
+                                </select>
+                                <input
+                                    type="number"
+                                    className="border rounded-lg p-1 w-1/2 flex justify-center text-center"
+                                    value={
+                                        selectedSize?.sizes_products
+                                            ? selectedSize?.sizes_products
+                                                  ?.amount
+                                            : ''
+                                    }
+                                    onChange={(e) =>
+                                        handleSizeChange(
+                                            index,
+                                            'amount',
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="Cantidad"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeSizeField(index)}
+                                    className="text-red-500 cursor-pointer"
+                                >
+                                    <TrashIcon className="h-4 w-4" />
+                                </button>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={addNewSizeField}
+                            className="text-blue-500 hover:text-blue-800 cursor-pointer hover:text-decoration hover:underline-offset-4 hover:underline"
+                        >
+                            Agregar Talla
+                        </button>
                     </div>
                 </div>
 

@@ -37,8 +37,6 @@ const FormAddSize = ({
         setFormData(initialFormSize);
     };
 
-    console.log(formData);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors(err);

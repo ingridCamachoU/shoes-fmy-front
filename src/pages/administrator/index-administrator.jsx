@@ -16,6 +16,7 @@ import { converterPrice } from '../../utils/converter';
 import FormAddCategorie from './categorie/form-Categorie';
 import FormAddSize from './size/form-size';
 import { useUserContext } from '../../context/user-contex';
+import DetailsProducts from './products/details-products-administ';
 
 const IndexAdministrator = () => {
     const [
@@ -513,6 +514,13 @@ const IndexAdministrator = () => {
                 setIsOpenModalCreateSize={setIsOpenModalCreateSize}
                 isOpenModalCreateSize={isOpenModalCreateSize}
                 loadDataSize={loadDataSize}
+            />
+
+            <DetailsProducts
+                isOpenModalDetailProduct={isOpenModalDetailProduct}
+                editDataProduct={editDataProduct}
+                setEditDataProduct={setEditDataProduct}
+                setIsOpenModalDetailProduct={setIsOpenModalDetailProduct}
             />
         </div>
     );
