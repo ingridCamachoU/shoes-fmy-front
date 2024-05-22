@@ -30,7 +30,6 @@ export const helpAxios = async ({
         data: data,
     };
 
-    console.log('confi:', config.data);
     try {
         const response = await axios(config);
         alert(title, icon);

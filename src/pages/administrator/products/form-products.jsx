@@ -71,9 +71,9 @@ const FormAddProducts = ({
                 price: editDataProduct?.price || '',
                 stock: editDataProduct?.stock || '',
                 color: editDataProduct?.color || '',
-                category: editDataProduct?.category?.id || '',
-                gender: editDataProduct?.gender || '',
                 images: editDataProduct?.images || '',
+                gender: editDataProduct?.gender || '',
+                category: editDataProduct?.category?.id || '',
             };
             setFormData(copyData);
             setSelectedSizes(editDataProduct?.sizes || []);
@@ -89,7 +89,17 @@ const FormAddProducts = ({
         setErrors(err);
         if (Object.keys(err).length === 0) {
             if (formData.code && formData.name && formData.price) {
-                const formDataWithSizes = { ...formData, sizes: selectedSizes };
+                const validSizes = getValidSizes();
+                const formDataWithSizes = {
+                    ...formData,
+                    sizes: [
+                        ...validSizes.map((size) => ({
+                            size_id: size?.size_id || size?.id,
+                            amount:
+                                size?.amount || size?.sizes_products?.amount,
+                        })),
+                    ],
+                };
                 const config = {
                     url: editDataProduct
                         ? endPoints.products.updateProduct(editDataProduct.id)
@@ -128,11 +138,19 @@ const FormAddProducts = ({
         setSelectedSizes(newSizes);
     };
 
+    const getValidSizes = () => {
+        return selectedSizes.filter(
+            (size) =>
+                (size.size_id && size.amount) ||
+                (size.id && size.sizes_products.amount)
+        );
+    };
+
     const addImage = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: [value],
+            [name]: [...formData[name], value],
         });
     };
 
@@ -146,6 +164,13 @@ const FormAddProducts = ({
 
     const handleModalClick = (e) => e.stopPropagation();
 
+    const availableSizes = dataSize.data || [];
+
+    const idsSizeSelectedSizes = selectedSizes.map((item) => item.id);
+
+    const arrayFiltrado = availableSizes.filter(
+        (item) => !idsSizeSelectedSizes.includes(item.id)
+    );
     return (
         <div
             className={`${
@@ -287,7 +312,7 @@ const FormAddProducts = ({
                         </select>
                     </div>
 
-                    <div className="flex-col flex md:w-1/2 w-11/12">
+                    {/* <div className="flex-col flex md:w-1/2 w-11/12">
                         <label>Tallas</label>
                         {selectedSizes.map((selectedSize, index) => (
                             <div key={index} className="flex mb-2 gap-2">
@@ -314,6 +339,7 @@ const FormAddProducts = ({
                                         <option
                                             key={availableSize.id}
                                             value={availableSize.id}
+                                            className="flex justify-center text-center"
                                         >
                                             {availableSize.number}
                                         </option>
@@ -326,7 +352,81 @@ const FormAddProducts = ({
                                         selectedSize?.sizes_products
                                             ? selectedSize?.sizes_products
                                                   ?.amount
-                                            : ''
+                                            : selectedSize.amount
+                                    }
+                                    onChange={(e) =>
+                                        handleSizeChange(
+                                            index,
+                                            'amount',
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="Cantidad"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeSizeField(index)}
+                                    className="text-red-500 cursor-pointer"
+                                >
+                                    <TrashIcon className="h-4 w-4" />
+                                </button>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={addNewSizeField}
+                            className="text-blue-500 hover:text-blue-800 cursor-pointer hover:text-decoration hover:underline-offset-4 hover:underline"
+                        >
+                            Agregar Talla
+                        </button>
+                    </div> */}
+
+                    <div className="flex-col flex md:w-1/2 w-11/12">
+                        <label>Tallas</label>
+                        {selectedSizes.map((selectedSize, index) => (
+                            <div key={index} className="flex mb-2 gap-2">
+                                <select
+                                    className="border rounded-lg mr-4 p-1 w-1/2 cursor-pointer"
+                                    value={selectedSize.size_id || ''}
+                                    onChange={(e) =>
+                                        handleSizeChange(
+                                            index,
+                                            'size_id',
+                                            e.target.value
+                                        )
+                                    }
+                                >
+                                    <option value="">
+                                        {selectedSize?.number
+                                            ? selectedSize?.number
+                                            : 'Talla'}
+                                    </option>
+                                    {arrayFiltrado.map((availableSize) => (
+                                        <option
+                                            key={availableSize.id}
+                                            value={availableSize.id}
+                                            disabled={
+                                                selectedSizes.some(
+                                                    (size) =>
+                                                        size.size_id ===
+                                                        availableSize.id
+                                                ) ||
+                                                selectedSize.size_id ===
+                                                    availableSize.id
+                                            }
+                                        >
+                                            {availableSize.number}
+                                        </option>
+                                    ))}
+                                </select>
+                                <input
+                                    type="number"
+                                    className="border rounded-lg p-1 w-1/2 flex justify-center text-center"
+                                    value={
+                                        selectedSize?.sizes_products
+                                            ? selectedSize?.sizes_products
+                                                  ?.amount
+                                            : selectedSize.amount
                                     }
                                     onChange={(e) =>
                                         handleSizeChange(
