@@ -87,7 +87,7 @@ const ShoppingCart = () => {
                                     $ {converterPrice(price)}
                                 </span>
                             </p>
-                            <button className="bg-background-yellow text-text-ligth items-center flex justify-center gap-2 rounded-lg w-50 mt-4 hover:bg-yellow-600 px-1 font-semibold">
+                            <button className="bg-background-yellow text-text-ligth items-center flex justify-center gap-2 rounded-lg w-50 mt-4 hover:bg-yellow-600 py-1">
                                 <a
                                     href="https://www.youtube.com/watch?v=R6MNlWagZhk"
                                     target="_blank"

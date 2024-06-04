@@ -36,6 +36,7 @@ export const helpAxios = async ({
         if (loadData) {
             loadData();
         }
+        console.log(response.data);
         return response.data;
     } catch (error) {
         const errorCodigo = error.response.data.message;

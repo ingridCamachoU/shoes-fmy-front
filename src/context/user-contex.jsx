@@ -44,21 +44,35 @@ export default function UserContextProvider({ children }) {
         }
     };
 
+    const saveToken = (token) => {
+        const expiration = new Date();
+        expiration.setTime(expiration.getTime() + 2 * 60 * 60 * 1000); // 2 horas en milisegundos
+        localStorage.setItem('token', token);
+        localStorage.setItem('tokenExpiration', expiration.getTime());
+    };
+
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
-        const storedUser = localStorage.getItem('user');
-        if (storedToken && storedUser) {
-            // Restaurar el estado de la sesión del usuario
-            setUser(JSON.parse(storedUser)); // O cualquier lógica que tengas para manejar la autenticación
+        const expiration = localStorage.getItem('tokenExpiration');
+        const currentTime = new Date().getTime();
+
+        if (storedToken && expiration && currentTime < parseInt(expiration)) {
+            setUser(JSON.parse(localStorage.getItem('user')));
             setToken(storedToken);
+        } else {
+            // Token expirado, limpiar el localStorage
+            localStorage.removeItem('token');
+            localStorage.removeItem('tokenExpiration');
+            localStorage.removeItem('user');
         }
+
         url();
         if (data.pathname !== '/') {
             setUrlProduct(endPoints.products.getProducts);
             setSearch('');
         }
         loadDataProduct();
-    }, [urlProduct, search, data.pathname]);
+    }, [urlProduct, search, data.pathname, token]);
 
     // Save localStorage
     const saveLocal = () => {
@@ -151,6 +165,7 @@ export default function UserContextProvider({ children }) {
                 setTotal,
                 user,
                 setUser,
+                saveToken,
                 token,
                 setToken,
                 dataProduct,

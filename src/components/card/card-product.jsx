@@ -33,7 +33,7 @@ const Card = (product) => {
                 <img
                     src={product?.images}
                     alt="product"
-                    className="shadow-md shadow-gray-200 hover:scale-110 duration-500"
+                    className="shadow-md shadow-gray-200 hover:scale-110 duration-500 object-cover h-64 w-64"
                 />
             </picture>
             <h3 className="text-lg pt-4"> {product?.name}</h3>

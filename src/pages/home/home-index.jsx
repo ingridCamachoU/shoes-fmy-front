@@ -22,7 +22,7 @@ const Home = () => {
     return (
         <div>
             <div>
-                <picture className="flex ml-4">
+                <picture className="flex">
                     <source srcSet={posterMovil} media="(max-width:640px)" />
                     <img src={poster} alt="postPage" />
                 </picture>

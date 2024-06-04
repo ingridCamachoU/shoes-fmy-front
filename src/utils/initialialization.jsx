@@ -23,3 +23,13 @@ export const initialFormLogin = {
     email: '',
     password: '',
 };
+
+export const initialFormUser = {
+    cc: '',
+    name: '',
+    phone: '',
+    email: '',
+    password: '',
+    address: '',
+    role: 'user',
+};

@@ -9,7 +9,7 @@ import { useRedirectActiveUser } from '../../hooks/useRedirectActiveUser';
 const Login = () => {
     const [formData, handleChange, setFormData] = useForm(initialFormLogin);
 
-    const { setUser, user, setToken, token } = useUserContext();
+    const { setUser, user, setToken, saveToken } = useUserContext();
     useRedirectActiveUser(user, '/private');
     const navigate = useNavigate();
 
@@ -63,7 +63,7 @@ const Login = () => {
                 if (data.data.user) {
                     setUser(data.data.user);
                     setToken(data.data.tokenSession);
-                    localStorage.setItem('token', data.data.tokenSession);
+                    saveToken(data.data.tokenSession);
                     localStorage.setItem(
                         'user',
                         JSON.stringify(data.data.user)
@@ -119,7 +119,7 @@ const Login = () => {
                                 className="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:leading-6"
                             />
                             {errors.email && (
-                                <p className="text-text-red">{errors.email}</p>
+                                <p className="text-red-600">{errors.email}</p>
                             )}
                         </div>
                     </div>
@@ -141,7 +141,7 @@ const Login = () => {
                                 className="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:leading-6"
                             />
                             {errors.password && (
-                                <p className="text-text-red">
+                                <p className="text-red-600">
                                     {errors.password}
                                 </p>
                             )}
@@ -159,7 +159,7 @@ const Login = () => {
                     <div>
                         <button
                             type="submit"
-                            className="flex w-full justify-center rounded-md bg-background-yellow px-3 py-1.5 font-semibold leading-6  shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-yellow-600"
+                            className="flex w-full justify-center rounded-md bg-background-yellow px-3 py-1.5 font-semibold leading-6  shadow-sm hover:bg-yellow-600 focus-visible:bg-yellow-600"
                         >
                             Iniciar sesión
                         </button>
@@ -167,7 +167,7 @@ const Login = () => {
                 </form>
 
                 {serverError && (
-                    <p className="text-text-red text-center mt-4">
+                    <p className="text-red-600 text-center mt-4">
                         {serverError}
                     </p>
                 )}

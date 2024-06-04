@@ -43,7 +43,7 @@ const CardShoppinCart = ({
                 <div className="flex w-4/6 justify-between px-4">
                     <p>$ {converterPrice(priceN)}</p>
                     <button onClick={deleteProduct}>
-                        <TrashIcon className="h-6 w-6 hover:text-yellow-600" />
+                        <TrashIcon className="h-6 w-6 hover:text-red-500" />
                     </button>
                 </div>
             </div>

@@ -11,7 +11,7 @@ const Footer = () => {
 
     return (
         <footer className="mt-auto w-full">
-            <div className="flex bg-gray-200 p-10 justify-between">
+            <div className="flex bg-gray-200 p-10 justify-between flex-col md:flex-row gap-4">
                 <div>
                     <h4 className="font-bold">SUSCRÍBETE</h4>
                     <p>
@@ -19,7 +19,7 @@ const Footer = () => {
                         <strong>NUESTRAS OFERTAS!</strong>
                     </p>
                 </div>
-                <div>
+                <div className="gap-2 flex">
                     <input
                         type="text"
                         placeholder="Dirección correo electrónico"
