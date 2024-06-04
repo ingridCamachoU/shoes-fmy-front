@@ -13,7 +13,7 @@ import { helpAxios } from '../../service/helpAxios';
 import { useFetch } from '../../hooks/useFetch';
 import Loading from '../../components/Loading';
 import { converterPrice } from '../../utils/converter';
-import FormAddCategorie from './categorie/form-Categorie';
+import FormAddCategorie from './categorie/form-categorie';
 import FormAddSize from './size/form-size';
 import { useUserContext } from '../../context/user-contex';
 import DetailsProducts from './products/details-products-administ';
