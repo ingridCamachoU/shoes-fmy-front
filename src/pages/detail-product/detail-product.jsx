@@ -81,6 +81,10 @@ const DetailProduct = () => {
                                                 {product?.color}
                                             </p>
 
+                                            <p className="text-lg mt-4">
+                                                {product?.gender}
+                                            </p>
+
                                             {product?.sizes.length > 0 ? (
                                                 <p className="text-lg mt-2">
                                                     <strong>
@@ -137,7 +141,30 @@ const DetailProduct = () => {
                                                 )}
                                             </div>
 
-                                            <div className="pt-4">
+                                            <div className="mt-4 gap-4">
+                                                <p>
+                                                    Todas nuestras entregas en
+                                                    Colombia se realizan con la
+                                                    transportadora COORDINADORA
+                                                    MERCANTIL.
+                                                </p>
+                                                <p>
+                                                    Nuestros tiempos de entrega
+                                                    son:
+                                                </p>
+
+                                                <p>
+                                                    Ciudades principales: 2 a 3
+                                                    días hábiles
+                                                    <br />
+                                                    Ciudades intermedias: 3 a 5
+                                                    días hábiles
+                                                    <br />
+                                                    Destinos lejanos: 8 a 15
+                                                    días hábiles
+                                                </p>
+                                            </div>
+                                            <div className="pt-6">
                                                 <picture>
                                                     <img
                                                         src={metodoPago}
