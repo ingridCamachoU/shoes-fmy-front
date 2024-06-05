@@ -1,8 +1,34 @@
-# React + Vite
+## About project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Development of electronic commerce of footwear products and variety.
 
-Currently, two official plugins are available:
+## Screenshot
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![image](https://github.com/ingridCamachoU/card-practice/blob/main/mockupp.png)
+
+## Demo
+
+👉 https://shoes-fmy-ingrid-camachos-projects.vercel.app/
+
+## Functionalities
+
+-   Register and log in
+-   Display all the available products on cards
+-   View product details
+-   Filter products by category, size and color
+-   Add to cart similar purchase
+-   Create products, category and size when logged in as administrator, edit profile
+
+## Technologies
+
+-   Frontend
+    -   Javascript
+    -   React.js
+    -   React Router
+    -   Vite
+    -   Tailwind
+    -   Axios
+-   Backend
+    👉 https://github.com/ingridCamachoU/api-shoes-fmy
+-   Version control
+    -   Git
