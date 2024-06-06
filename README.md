@@ -32,3 +32,6 @@ Development of electronic commerce of footwear products and variety.
     👉 https://github.com/ingridCamachoU/api-shoes-fmy
 -   Version control
     -   Git
+ 
+## Design figma 
+- https://www.figma.com/design/Afs8UF2QLrAyK8LlDFhBUB/SHOES-FMY?m=dev&node-id=0-1&t=z4QfevXyRo8Xr33s-1
