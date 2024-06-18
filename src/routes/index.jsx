@@ -13,6 +13,7 @@ import ShoppingCart from '../pages/shopping-cart/shopping-cart';
 import Recover from '../pages/login/recover';
 import RootLayout from '../layout/root-layout';
 import User from '../pages/user/user';
+import NotFound from '../pages/NotFound';
 
 export const router = createBrowserRouter([
     {
@@ -70,6 +71,10 @@ export const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register />,
+            },
+            {
+                path: '/*',
+                element: <NotFound />,
             },
             {
                 path: 'private',
